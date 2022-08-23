@@ -95,6 +95,8 @@ jobs:
       - name: Dump env
         id: dump-env
         shell: bash
+        env:
+          GITHUB_CONTEXT: "${{ toJSON(github) }}"
         run: |
           env
 
