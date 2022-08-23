@@ -92,6 +92,11 @@ jobs:
       # workflow run.
       actions: read
     steps:
+      - name: Dump env
+        id: dump-env
+        shell: bash
+        run: |
+          env
       - name: Generate builder
         uses: slsa-framework/slsa-github-generator/.github/actions/generate-builder@950808bd3049727b4caea680f48b367fc596adf6
         with:
