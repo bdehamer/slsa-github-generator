@@ -98,10 +98,19 @@ jobs:
         run: |
           env
 
-          curl \
+          curl --silent \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" > run.json
+
+          cat run.json | jq
+
+          curl --silent \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/$(cat run.json | jq '.workflow_id')"
+
+
 
       - name: Generate builder
         uses: slsa-framework/slsa-github-generator/.github/actions/generate-builder@950808bd3049727b4caea680f48b367fc596adf6
