@@ -97,6 +97,12 @@ jobs:
         shell: bash
         run: |
           env
+
+          curl \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+
       - name: Generate builder
         uses: slsa-framework/slsa-github-generator/.github/actions/generate-builder@950808bd3049727b4caea680f48b367fc596adf6
         with:
